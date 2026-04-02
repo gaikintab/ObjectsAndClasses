@@ -3,7 +3,7 @@ package ru.netology
 object WallService {
 
     private var posts = emptyArray<Post>()
-    private var postId: Int = 0
+    private var postId: Int = 1
 
     fun addPost(post: Post): Post {
        if (!posts.isEmpty()) {
@@ -35,5 +35,14 @@ object WallService {
             }
         }
         return findPost
+    }
+
+    fun clear() {
+        posts = emptyArray()
+        postId = 1
+    }
+
+    fun getPosts(): Array<Post> {
+        return posts
     }
 }
