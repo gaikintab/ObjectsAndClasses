@@ -10,8 +10,10 @@ class WallServiceTest {
 
     val likes = Likes(5, true)
     val comment = Comment(1)
-    val post = Post(2, 12345, 54321, 2323, 4545,
-        141516, "first post", comment = comment, likes = likes)
+    val post = Post(
+        2, 12345, 54321, 2323, 4545,
+        141516, "first post", comment = comment, likes = likes
+    )
 
     @Before
     fun clearWallService() {
