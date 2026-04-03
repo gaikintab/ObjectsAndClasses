@@ -11,7 +11,8 @@ data class Post(
     val isFavorite: Boolean = false,
     val markedAsAds: Boolean = false,
     val comment: Comment?,
-    val likes: Likes?
+    val likes: Likes?,
+    val attachments: Array<Attachment>
 )
 
 data class Comment(
