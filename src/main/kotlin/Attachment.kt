@@ -1,7 +1,16 @@
 package ru.netology
 
-interface Attachment {
-    val type: String
+sealed class Attachment (val type: String) {
+
+    data class PhotoAttachment(val photo: Photo) : Attachment("photo")
+
+    data class VideoAttachment(val video: Video) : Attachment("video")
+
+    class AudioAttachment(val audio: Audio) : Attachment("audio")
+
+    class FileAttachment(val file: File) : Attachment("file")
+
+    class GeoAttachment(val geo: Geo) : Attachment("coordinates")
 }
 
 data class Photo(
@@ -24,10 +33,6 @@ data class Sizes(
     val width: Int,
     val height: Int
 )
-
-class PhotoAttachment(val photo: Photo) : Attachment {
-    override val type = "photo"
-}
 
 data class Video(
     val id: Int,
@@ -99,10 +104,6 @@ data class Reposts(
     val userReposted: Int
 )
 
-class VideoAttachment(val video: Video) : Attachment {
-    override val type = "video"
-}
-
 data class Audio(
     val id: Int,
     val ownerId: Int,
@@ -117,10 +118,6 @@ data class Audio(
     val noSearch: Boolean,
     val isHQ: Boolean
 )
-
-class AudioAttachment(val audio: Audio) : Attachment {
-    override val type = "audio"
-}
 
 data class File(
     val id: Int,
@@ -161,22 +158,18 @@ data class AudioPreview(
     override val type = "audio_message"
 }
 
-class FileAttachment(val file: File) : Attachment {
-    override val type = "file"
-}
-
 data class Geo(
     val type: String,
     val coordinates: Coordinates,
     val place: Place
 )
 
-data class Coordinates (
+data class Coordinates(
     val latitude: Int,
     val longitude: Int
 )
 
-data class Place (
+data class Place(
     val type: Int,
     val groupId: Int,
     val groupPhoto: String,
@@ -184,7 +177,3 @@ data class Place (
     val updated: Int,
     val address: Int
 )
-
-class GeoAttachment(val geo: Geo) : Attachment {
-    override val type = "coordinates"
-}

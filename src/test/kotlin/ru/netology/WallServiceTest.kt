@@ -12,7 +12,7 @@ class WallServiceTest {
     val comment = Comment(1)
     val audio: Audio = Audio(1, 2, "Any", "Chorus", 75, "",
     25, 100, 122, 10000, noSearch = true, isHQ = true)
-    val attachment: Attachment = AudioAttachment(audio)
+    val attachment: Attachment = Attachment.AudioAttachment(audio)
     var attachments = emptyArray<Attachment>()
 
 //    val post = Post(
