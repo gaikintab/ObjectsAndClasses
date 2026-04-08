@@ -5,6 +5,13 @@ object WallService {
     private var posts = emptyArray<Post>()
     private var postId: Int = 1
     private var comments = emptyArray<Comment>()
+    private var commentReports: Array<CommentReport> = emptyArray()
+
+    data class CommentReport(
+        val ownerId: Int,
+        val commentId: Int,
+        val reason: Int
+    )
 
     fun addPost(post: Post): Post {
         if (!posts.isEmpty()) {
@@ -59,5 +66,21 @@ object WallService {
             }
         }
         return if (findPost) {comments.last()} else throw PostNotFoundException("Post with id $pId not found")
+    }
+
+    fun reportComment(ownerId: Int, commentId: Int, reason: Int): Boolean {
+        var findComment = false
+        for (comment in comments) {
+            if (comment.id == commentId) {
+                if (reason in 0..8) {
+                    commentReports += CommentReport(ownerId, commentId, reason)
+                    findComment = true
+                } else {
+                    throw ReasonNotFoundException("Reason $reason in incorrect. Must be from 0 to 8")
+                }
+            }
+        }
+        return if (findComment) {findComment} else
+            throw CommentNotFoundException("Comment with id $commentId not found")
     }
 }

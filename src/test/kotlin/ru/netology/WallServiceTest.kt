@@ -5,6 +5,7 @@ import org.junit.Before
 import org.junit.Test
 import ru.netology.WallService.addComment
 import ru.netology.WallService.addPost
+import ru.netology.WallService.reportComment
 import ru.netology.WallService.updatePost
 
 class WallServiceTest {
@@ -17,10 +18,6 @@ class WallServiceTest {
     val attachment: Attachment = Attachment.AudioAttachment(audio)
     var attachments = emptyArray<Attachment>()
 
-//    val post = Post(
-//        2, 12345, 54321, 2323, 4545,
-//        141516, "first post", comment = comment, likes = likes, attachments = attachments
-//    )
 
     @Before
     fun clearWallService() {
@@ -89,5 +86,47 @@ class WallServiceTest {
         val comment = Comment(1, 12, 32234, "first comment", false, 1,
             1, null, null, null)
         addComment(2, comment)
+    }
+
+    @Test
+    fun addReportComment_True() {
+        attachments += attachment
+        val post = Post(
+            2, 12345, 54321, 2323, 4545,
+            141516, "first post", comment = comment, likes = likes, attachments = attachments
+        )
+        addPost(post)
+        val comment = Comment(1, 12, 32234, "first comment", false, 1,
+            1, null, null, null)
+        addComment(1, comment)
+        assertEquals(reportComment(1, 1, 5), true)
+    }
+
+    @Test(expected = ReasonNotFoundException::class)
+    fun addReportComment_incorrectReason() {
+        attachments += attachment
+        val post = Post(
+            2, 12345, 54321, 2323, 4545,
+            141516, "first post", comment = comment, likes = likes, attachments = attachments
+        )
+        addPost(post)
+        val comment = Comment(1, 12, 32234, "first comment", false, 1,
+            1, null, null, null)
+        addComment(1, comment)
+        reportComment(1, 1, -1)
+    }
+
+    @Test(expected = CommentNotFoundException::class)
+    fun addReportComment_notFound() {
+        attachments += attachment
+        val post = Post(
+            2, 12345, 54321, 2323, 4545,
+            141516, "first post", comment = comment, likes = likes, attachments = attachments
+        )
+        addPost(post)
+        val comment = Comment(1, 12, 32234, "first comment", false, 1,
+            1, null, null, null)
+        addComment(1, comment)
+        reportComment(1, 2, 8)
     }
 }
