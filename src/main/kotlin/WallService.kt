@@ -4,6 +4,7 @@ object WallService {
 
     private var posts = emptyArray<Post>()
     private var postId: Int = 1
+    private var comments = emptyArray<Comment>()
 
     fun addPost(post: Post): Post {
         if (!posts.isEmpty()) {
@@ -38,12 +39,25 @@ object WallService {
         return findPost
     }
 
-    fun clear() {
+    fun clearService() {
         posts = emptyArray()
         postId = 1
+        comments = emptyArray()
     }
 
     fun getPosts(): Array<Post> {
         return posts
+    }
+
+    fun addComment(pId: Int, comment: Comment): Comment {
+        var findPost = false
+        for((index, post) in posts.withIndex()) {
+            if (post.id == pId) {
+                comments += comment
+                posts[index] = post.copy(comment = comments)
+                findPost = true
+            }
+        }
+        return if (findPost) {comments.last()} else throw PostNotFoundException("Post with id $pId not found")
     }
 }
