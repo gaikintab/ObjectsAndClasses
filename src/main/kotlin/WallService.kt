@@ -6,8 +6,8 @@ object WallService {
     private var postId: Int = 1
 
     fun addPost(post: Post): Post {
-       if (!posts.isEmpty()) {
-           postId = posts.last().id + 1
+        if (!posts.isEmpty()) {
+            postId = posts.last().id + 1
         }
         post.id = postId
         posts += post
@@ -18,7 +18,8 @@ object WallService {
         var findPost = false
         for ((index, post) in posts.withIndex()) {
             if (uPost.id == post.id) {
-                posts[index] = post.copy(id = uPost.id,
+                posts[index] = post.copy(
+                    id = uPost.id,
                     ownerId = uPost.ownerId,
                     fromId = uPost.fromId,
                     replyOwnerId = uPost.replyOwnerId,

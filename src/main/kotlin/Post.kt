@@ -10,8 +10,9 @@ data class Post(
     val text: String = "",
     val isFavorite: Boolean = false,
     val markedAsAds: Boolean = false,
-    val comment: Comment,
-    val likes: Likes
+    val comment: Comment?,
+    val likes: Likes?,
+    val attachments: Array<Attachment>
 )
 
 data class Comment(

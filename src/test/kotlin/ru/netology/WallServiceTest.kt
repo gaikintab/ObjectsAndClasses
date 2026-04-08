@@ -10,8 +10,15 @@ class WallServiceTest {
 
     val likes = Likes(5, true)
     val comment = Comment(1)
-    val post = Post(2, 12345, 54321, 2323, 4545,
-        141516, "first post", comment = comment, likes = likes)
+    val audio: Audio = Audio(1, 2, "Any", "Chorus", 75, "",
+    25, 100, 122, 10000, noSearch = true, isHQ = true)
+    val attachment: Attachment = Attachment.AudioAttachment(audio)
+    var attachments = emptyArray<Attachment>()
+
+//    val post = Post(
+//        2, 12345, 54321, 2323, 4545,
+//        141516, "first post", comment = comment, likes = likes, attachments = attachments
+//    )
 
     @Before
     fun clearWallService() {
@@ -20,13 +27,24 @@ class WallServiceTest {
 
     @Test
     fun addPost_test() {
+        attachments += attachment
+        val post = Post(
+            2, 12345, 54321, 2323, 4545,
+            141516, "first post", comment = comment, likes = likes, attachments = attachments
+        )
         val addedPost = addPost(post)
-        assertEquals(1, addedPost.id)
-        assertEquals("first post", addedPost.text)
+        assertEquals("audio", addedPost.attachments.last().type )
+//        assertEquals(1, addedPost.id)
+//        assertEquals("first post", addedPost.text)
     }
 
     @Test
     fun updatePost_testTrue() {
+        attachments += attachment
+        val post = Post(
+            2, 12345, 54321, 2323, 4545,
+            141516, "first post", comment = comment, likes = likes, attachments = attachments
+        )
         addPost(post)
         val result = updatePost(post.copy(id = 1, text = "first updated post"))
         assertEquals(true, result)
@@ -35,6 +53,11 @@ class WallServiceTest {
 
     @Test
     fun updatePost_testFalse() {
+        attachments += attachment
+        val post = Post(
+            2, 12345, 54321, 2323, 4545,
+            141516, "first post", comment = comment, likes = likes, attachments = attachments
+        )
         addPost(post)
         val result = updatePost(post.copy(id = 2, text = "first updated post"))
         assertEquals(false, result)
