@@ -147,6 +147,7 @@ class NoteComments(
     ): MutableList<ListComments> {
         returnList.clear()
         var i = count
+        if (i == 0) i = noteComments.size
         for (comment in noteComments) {
             if (comment.noteId == noteId) {
                 if (comment.ownerId == ownerId) {
@@ -158,7 +159,7 @@ class NoteComments(
                             )
                         )
                         i--
-                        if (i == 0) break      // счетчик
+                        if (i <= 0) break      // счетчик
                     }
                 }
             }
